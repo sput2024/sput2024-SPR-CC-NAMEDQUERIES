@@ -2,7 +2,10 @@ package Application.Repository;
 
 import Application.Model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -50,6 +53,7 @@ import java.util.List;
  *
  *     The test cases for this lab will attempt to identify the query methods you've written and run them.
  */
+
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
@@ -58,6 +62,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * @return the book with a particular ISBN
      */
     Book findBookByIsbn(long isbn);
+
     /**
      * This query will return a List of books that match a certain Author string for the Author field.
      * @param author
@@ -77,13 +82,25 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * TODO: Retrieve a book by its title. You may assume that titles are unique and that a single Book entity should
      * be returned, so the return type will be Book.
      */
+    /**
+     * 
+     * @param title
+     * @return
+     */
+    
+   // @Query("Select b from Book b where b.title=:title")
+    Book findBookByTitle(String title);
+   
+    
+    
 
     /**
      * TODO: Retrieve books by their availability using the field "available" in the class Book. The return type will be List<Book>.
      */
-
+    List<Book> findBookByAvailable(Boolean available);
     /**
      * TODO: Retrieve books by their dateAdded OR their lastDateWithdrawn.
      */
+    List<Book> findBookByDateAddedOrLastDateWithdrawn(Timestamp lastDateWithdrawn, Timestamp dateAdded);
 
 }
